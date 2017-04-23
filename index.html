@@ -95,6 +95,91 @@
 		<div class="markdown-body home-categories">
 		
 			<div class="article">
+                <a class="clearlink" href="14929114288384.html">
+                
+                  <h1>4.23 重拾Java之异常与多线程</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<ol>
+<li>使用throws关键字和throw的区别
+throws-&gt;声明一个方法可以不用处理异常类,但是调用的是必须处理异常,主方法也可以用此关键字,交给JVM处理异常,主方法内内不用处理异常
+格式:public return FuncName() throws exception
+throw-&gt;可以自己抛出一个手工产生的异常实例化对象new exception()</li>
+<li>自定义异常类
+在MyException类中声明构造方法,并且用super()调用父类的构造方法,再利用throw关键字抛出new MyException(&quot;ExceptionInfo&quot;)即可</li>
+<li>Java要将一个包提供给其他人使用,一般是将其压缩成一个jar包.使用的时候需要在classpath出注册这个jar
+SET CLASSPATH = .;F:\TEST\my.jar</li>
+<li>多线程有两种实现方式:Thread类和Runnable接口</li>
+</ol>
+
+<pre><code>-&gt;继承Thread类
+class MyThread extends Thread{
+    private String name;
+    public MyThread(String name){
+        this.name = name;
+    }
+    public void run(){
+        System.out.println(&quot;123&quot;);
+    }
+}
+调用:
+MyThread myTh1 =  new MyThread(&quot;线程A&quot;);
+MyThread myTh2 =  new MyThread(&quot;线程B&quot;);
+myTh1.start();//start()方法才是开启多线程
+myTh2.start()
+
+-&gt;实现runnable接口
+class MyThread implements Runnable{
+    private String name;
+    public MyThread(String name){
+        this.name = name;
+    }
+    public void run(){
+        System.out.println(&quot;123&quot;);
+    }
+}
+调用:
+MyThread myTh1 =  new MyThread(&quot;线程A&quot;);
+MyThread myTh2 =  new MyThread(&quot;线程B&quot;);
+//Thread默认提供传入Runnable子类的构造方法,完成多线程开启
+Thread A = new Thread(myTh1);
+Thread B = new Thread(myTh2);
+A.start();//start()方法才是开启多线程
+B.start()
+</code></pre>
+
+<p>-&gt;它俩的关系是,Thread是Runnable接口的子类,通过继承Thread的时候必须重写run()方法;</p>
+
+<p>-&gt;同时,使用Runnable是可以资源共享的,尽量使用Runnable接口;</p>
+
+<p>-&gt;Java中所有线程都是同时启动的,谁先抢到CPU资源谁先运行;</p>
+
+<p>-&gt;synchronized可以声明代码块,也可以用来声明同步方法;</p>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2017/4/23</span>
+                    
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
                 <a class="clearlink" href="14928557331593.html">
                 
                   <h1>4.22重拾java之开端</h1>
@@ -354,6 +439,12 @@ class Singleton{
                 <div class="side-content">
                 <ul class="posts-list">
 	      
+		      
+			      <li class="post">
+			        <a href="14929114288384.html">4.23 重拾Java之异常与多线程</a>
+			      </li>
+		     
+		  
 		      
 			      <li class="post">
 			        <a href="14928557331593.html">4.22重拾java之开端</a>

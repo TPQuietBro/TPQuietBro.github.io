@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  4.21 惠州小桂苑游览 - 
+  4.23 重拾Java之异常与多线程 - 
   
   </title>
   
@@ -95,10 +95,10 @@
       <div class="markdown-body article-wrap">
        <div class="article">
           
-          <h1>4.21 惠州小桂苑游览</h1>
+          <h1>4.23 重拾Java之异常与多线程</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2017/4/22</span>
+          <span class="date">2017/4/23</span>
 
           
            
@@ -113,13 +113,61 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <p>本来是当晚就会记录这次游览旅程的,但是回来当晚停电了,所以这事就鸽了,现在补起来.<br/>
-这是公司组织的一次团体活动,总体内容包括:自行车骑行,坐快艇登陆东升岛游览民居,团队野炊,自己生火做饭.<br/>
-针对这次活动呢,我是非常期待的,毕竟作为一个程序员,长期面对电脑,出去看看海也还是不错的.当天天气十分阴沉,看样子随时会下雨,用波哥的话说就是:虫鸟低飞,肯定下雨.事实证明后来确实下了......<br/>
-到达目的地之后的第一项自然就是自行车骑行,我和波哥选择了一辆双人骑的自行车,原因很简单,波哥不会骑自行车,嘿嘿.于是乎我就带着波哥去海边兜了一把风.大海是我比较向往的地方之一,这次我是真的体会到了什么叫一望无际的大海,那宽广,那包容,还有那咸咸湿湿的海风的味道,令人回味.大概一个小时,环岛骑行算是结束了.<br/>
-接下来是坐快艇去东升岛游览.快艇这辈子是第一次坐,在浪里前行,有一种时刻在漂移的感觉,第一次感觉浪得感觉很好,哈哈.不过坐船边的哥们就惨了,裤子全湿了.登岛之后,游览了岛上的民居,然后临近回去的时候,大雨如期而至,还好旁边有一座宾馆可以用来避雨.好不容易等到雨小了,总算是再次乘坐快艇回到了大陆的怀抱.<br/>
-最后就是野炊环节,我的任务很简单,生火,杀鸡.作为一个常年做饭的老手我自然是很快搞定.我们分了几组团队,我们这组领导比较多,那有些人就干得格外卖力,有一个妹子一看就是没咋做过饭的,硬是杵在那里做了几个菜,十几分钟做的几个菜,硬是做了半个多小时,我心里其实明白她为啥要这么做.本来大家是叫我做,我看她在哪里做的格外卖力,也没有和她争,谁不想吃现成的呢,嘿嘿.<br/>
-饭吃完了,雨也停了,也该回去了.总的来说,这次活动没有想象中的那么令人满意,不够纯粹.我庆幸自己是一个做技术的程序员,不用为了一些其他东西额外去伤脑筋.做人还是纯粹点,会更洒脱快乐<sup>-<sup>.</sup></sup></p>
+      <ol>
+<li>使用throws关键字和throw的区别
+throws-&gt;声明一个方法可以不用处理异常类,但是调用的是必须处理异常,主方法也可以用此关键字,交给JVM处理异常,主方法内内不用处理异常
+格式:public return FuncName() throws exception
+throw-&gt;可以自己抛出一个手工产生的异常实例化对象new exception()</li>
+<li>自定义异常类
+在MyException类中声明构造方法,并且用super()调用父类的构造方法,再利用throw关键字抛出new MyException(&quot;ExceptionInfo&quot;)即可</li>
+<li>Java要将一个包提供给其他人使用,一般是将其压缩成一个jar包.使用的时候需要在classpath出注册这个jar
+SET CLASSPATH = .;F:\TEST\my.jar</li>
+<li>多线程有两种实现方式:Thread类和Runnable接口</li>
+</ol>
+
+<pre><code>-&gt;继承Thread类
+class MyThread extends Thread{
+    private String name;
+    public MyThread(String name){
+        this.name = name;
+    }
+    public void run(){
+        System.out.println(&quot;123&quot;);
+    }
+}
+调用:
+MyThread myTh1 =  new MyThread(&quot;线程A&quot;);
+MyThread myTh2 =  new MyThread(&quot;线程B&quot;);
+myTh1.start();//start()方法才是开启多线程
+myTh2.start()
+
+-&gt;实现runnable接口
+class MyThread implements Runnable{
+    private String name;
+    public MyThread(String name){
+        this.name = name;
+    }
+    public void run(){
+        System.out.println(&quot;123&quot;);
+    }
+}
+调用:
+MyThread myTh1 =  new MyThread(&quot;线程A&quot;);
+MyThread myTh2 =  new MyThread(&quot;线程B&quot;);
+//Thread默认提供传入Runnable子类的构造方法,完成多线程开启
+Thread A = new Thread(myTh1);
+Thread B = new Thread(myTh2);
+A.start();//start()方法才是开启多线程
+B.start()
+</code></pre>
+
+<p>-&gt;它俩的关系是,Thread是Runnable接口的子类,通过继承Thread的时候必须重写run()方法;</p>
+
+<p>-&gt;同时,使用Runnable是可以资源共享的,尽量使用Runnable接口;</p>
+
+<p>-&gt;Java中所有线程都是同时启动的,谁先抢到CPU资源谁先运行;</p>
+
+<p>-&gt;synchronized可以声明代码块,也可以用来声明同步方法;</p>
 
       </div>
 
@@ -127,16 +175,13 @@
         <div class="large-6 columns">
         <p class="text-left" style="padding:15px 0px;">
       
-          <a href="14928557331593.html" 
-          title="Previous Post: 4.22重拾java之开端">&laquo; 4.22重拾java之开端</a>
-      
         </p>
         </div>
         <div class="large-6 columns">
       <p class="text-right" style="padding:15px 0px;">
       
-          <a  href="14907948652831.html" 
-          title="Next Post: 4.20心情总结">4.20心情总结 &raquo;</a>
+          <a  href="14928557331593.html" 
+          title="Next Post: 4.22重拾java之开端">4.22重拾java之开端 &raquo;</a>
       
       </p>
         </div>
